@@ -1,0 +1,242 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fnil\fcharset0 LucidaGrande;\f1\fswiss\fcharset0 Helvetica;\f2\fnil\fcharset0 Monaco;
+\f3\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red83\green83\blue83;\red17\green84\blue195;
+}
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 \
+
+\fs36 What is it?\
+
+\fs24 \
+
+\b0 DiracAudioPlayer is a new set of Cocoa classes that wrap the entire Dirac functionality in a convenient way, exposing an API that is close to what AVAudioPlayer offers. Following are the core features and a description of the API.\
+\
+
+\b\fs36 DiracAudioPlayer Core Features
+\fs28 \
+
+\b0\fs24 \
+DiracAudioPlayer is a set of classes that allow file based playback of a variety of audio formats while simultaneously changing speed and pitch of the audio file in real time. Version 1.0 consists of DiracAudioPlayerBase (the base class taking care of file IO and playback), DiracAudioPlayer (wrapping the Dirac Core API) and DiracFxAudioPlayer (wrapping the DiracFx API). \
+\
+Make sure you include all 3 classes in your project, the "ExtAudioFile" and "util" folders, and add Accelerate.framework and CoreAudio.framework to the project. On MacOS X you will have to add the AudioUnit.framework as well, on iOS you will have to add the AudioToolbox.framework instead.\
+\
+\
+
+\b\fs36 DiracAudioPlayer is\'85
+\fs28 \
+
+\b0\fs24 \
+\'85an Apple-compatible platform independent class that works on iOS 3.2/4+ and MacOS X 10.6+, including 10.7\
+\'85very easy to use\
+\'85fully ARC compatible\
+\'85delivered to you including the full source code\
+\
+\
+
+\b\fs36 DiracAudioPlayer API
+\fs28 \
+
+\b0\fs24 \
+Version 1.0 released on March 12, 2012 offers the following calls:
+\f1 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+
+\f2\fs20 \cf0 \CocoaLigature0 \
+\
+	- (\cf2 id\cf0 ) initWithContentsOfURL:(NSURL*)inUrl channels:(\cf2 int\cf0 )channels error: (NSError **)error;\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab480\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \CocoaLigature1 	
+\f0 Initializes and returns an audio player for playing a designated sound file. A URL identifying the sound file to play. The audio data must be in a format supported by Core Audio. Pass in the address of a \cf3 nil\cf0 -initialized {\field{\*\fldinst{HYPERLINK "file:///Developer/Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleiOS4_2.iOSLibrary.docset/Contents/Resources/Documents/documentation/Cocoa/Reference/Foundation/Classes/NSError_Class/Reference/Reference.html#//apple_ref/occ/cl/NSError"}}{\fldrslt \cf4 NSError}} object. If an error occurs, upon return the \cf3 NSError\cf0  object describes the error.\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+
+\f2\fs20 \cf0 \CocoaLigature0 \
+\
+	- (\cf2 void\cf0 ) setDelegate:(\cf2 id\cf0 )delegate;\
+	- (\cf2 id\cf0 ) delegate;\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 \CocoaLigature1 Set/get delegate of the class. If you implement the delegate protocol, DiracAudioPlayer will call your implementation of 
+\f1 \
+\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+
+\f2\fs20 \cf0 \CocoaLigature0 	- (\cf2 void\cf0 )diracPlayerDidFinishPlaying:(DiracAudioPlayerBase *)player successfully:(\cf2 BOOL\cf0 )flag\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 \CocoaLigature1 When it is done playing
+\f2\fs20 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 \
+\
+	- (\cf2 void\cf0 ) changeDuration:(\cf2 float\cf0 )duration;\
+	- (\cf2 void\cf0 ) changePitch:(\cf2 float\cf0 )pitch;\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \CocoaLigature1 \
+
+\f0 Change playback speed and pitch
+\f2\fs20 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 \
+\
+	- (NSInteger) numberOfLoops;\
+	- (\cf2 void\cf0 ) setNumberOfLoops:(NSInteger)loops;\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs22 \cf0 \CocoaLigature1 	\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\fs24 \cf0 	A value of \cf3 0\cf0 , which is the default, means to play the sound once. Set a positive integer value to specify the number of times to return to the start and play again. For example, specifying a value of \cf3 1\cf0  results in a total of two plays of the sound. Set any negative integer value to loop the sound indefinitely until you call the \cf4 stop\cf0  method.
+\f2\fs20 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 \
+	- (\cf2 void\cf0 ) updateMeters;\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 \CocoaLigature1 \
+Must be called prior to calling -\CocoaLigature0 peakPowerForChannel \CocoaLigature1 in order to update its internal measurements
+\f2\fs20 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 \
+\
+	- (\cf2 float\cf0 ) peakPowerForChannel:(NSUInteger)channelNumber;\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f1 \cf0 \CocoaLigature1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 	A floating-point representation, in decibels, of a given audio channel\'92s current peak power. A return value of 0 dB indicates full scale, or maximum power; a return value of -160 dB indicates minimum power (that is, near silence). If the signal provided to the audio player exceeds \'b1full scale, then the return value may exceed 0 (that is, it may enter the positive range). To obtain a current peak power value, you must call the \cf4 updateMeters\cf0  method before calling this method.
+\f2\fs20 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 \
+\
+	- (\cf2 BOOL\cf0 ) prepareToPlay;\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \CocoaLigature1 	
+\f0 Starts the Dirac processing thread and prepares the sound file for playback. If you don't call this explicitly it will be called when calling \CocoaLigature0 -play
+\f2\fs20 \
+\
+\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 	- (NSUInteger) numberOfChannels;\
+\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs24 \cf0 \CocoaLigature1 The number of audio channels in the sound associated with the audio player. (read-only)\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f2\fs16 \cf0 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+
+\fs20 \cf0 	- (NSTimeInterval) fileDuration;\
+\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs24 \cf0 \CocoaLigature1 Returns the total duration, in seconds, of the sound associated with the audio player. (read-only)
+\f2\fs20 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 \
+	- (NSTimeInterval) currentTime;\
+	- (\cf2 void\cf0 ) setCurrentTime:(NSTimeInterval)time\
+\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 	Returns the current play time since playback has started. This is not within the time line of the audio file, but relative to the start of the file.\
+Setting this property causes playback to fast forward or rewind to the specified play time\
+\
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+
+\f2\fs20 \cf0 \
+	- (\cf2 void\cf0 ) play;\
+\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs26 \cf0 \CocoaLigature1 	
+\fs24 Plays a sound asynchronously. Returns 
+\f3 \cf3 YES
+\f0 \cf0  on success, or 
+\f3 \cf3 NO
+\f0 \cf0  on failure. Calling this method implicitly calls the 
+\f3 \cf3 prepareToPlay
+\f0 \cf0  method if the audio player is not already prepared to play.
+\fs26 \
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f2\fs20 \cf0 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 	- (NSURL*) url;\
+\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs24 \cf0 \CocoaLigature1 The URL for the sound associated with the audio player. (read-only)
+\fs26 \
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f2\fs20 \cf0 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 	- (\cf2 void\cf0 ) setVolume:(\cf2 float\cf0 )volume;\
+	- (\cf2 float\cf0 ) volume;\
+\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs24 \cf0 \CocoaLigature1 The playback gain for the audio player, ranging from 0.0 through 1.0.
+\f2\fs20 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 \
+	- (\cf2 BOOL\cf0 ) playing;\
+\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs26 \cf0 \CocoaLigature1 	
+\fs24 A Boolean value that indicates whether the audio player is playing (
+\f3 \cf3 YES
+\f0 \cf0 ) or not (
+\f3 \cf3 NO
+\f0 \cf0 ). (read-only). To find out when playback has stopped, use the 
+\f2 \CocoaLigature0 diracPlayerDidFinishPlaying:successfully: 
+\f0 \CocoaLigature1 delegate method.
+\fs26 \
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f2\fs20 \cf0 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 	- (\cf2 void\cf0 ) pause;\
+\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs26 \cf0 \CocoaLigature1 	
+\fs24 Pauses playback; sound remains ready to resume playback from where it left off. Calling 
+\f3 \cf3 pause
+\f0 \cf0  leaves the audio player prepared to play; it does not release the audio hardware that was acquired upon calling 
+\f3 \cf3 play
+\f0 \cf0  or 
+\f3 \cf3 prepareToPlay
+\f0 \cf0 .
+\fs26 \
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f2\fs20 \cf0 \CocoaLigature0 \
+\pard\tx480\pardeftab480\ql\qnatural\pardirnatural
+\cf0 	- (\cf2 void\cf0 ) stop;\
+\
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f0\fs26 \cf0 \CocoaLigature1 	
+\fs24 Stops playback and undoes the setup needed for playback. Calling this method, or allowing a sound to finish playing, undoes the setup performed upon calling the 
+\f3 \cf3 play
+\f0 \cf0  or 
+\f3 \cf3 prepareToPlay
+\f0 \cf0  methods.
+\fs26 \
+\pard\pardeftab720\sa200\ql\qnatural
+
+\f2\fs20 \cf0 \CocoaLigature0 \
+}

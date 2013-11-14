@@ -1,0 +1,23 @@
+* {
+	margin:0;
+	padding:0;
+
+}
+body {
+	background-color: #FFF;
+	-webkit-text-size-adjust: none; 
+}
+#planetmap{
+
+}
+
+.ui-dialog-contain {
+	width: 92.5%;
+	max-width: 500px;
+	margin: 10% auto 15px auto;
+	padding: 0;
+	position: relative;
+	top: -15px;
+}
+
+.containing-element .ui-slider-switch { width: 150px; }
