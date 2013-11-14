@@ -316,7 +316,11 @@ NSString* RATE_REQUESTED = @"RATE REQUESTED";
 
 - (void) loadSong:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
-    NSString *inputSound  = [[NSBundle mainBundle] pathForResource:  @"audio_001" ofType: @"wav"];
+    NSString* callbackID = [arguments pop];
+    [callbackID retain];
+    NSString *arg1 = [arguments objectAtIndex:0];
+    
+    NSString *inputSound  = [[NSBundle mainBundle] pathForResource:arg1 ofType: @"wav"];
     NSURL *inUrl = [NSURL fileURLWithPath:inputSound];
     
     NSError *error = nil;
@@ -325,8 +329,6 @@ NSString* RATE_REQUESTED = @"RATE REQUESTED";
     [mDiracAudioPlayer setNumberOfLoops:999];
     
     [mDiracAudioPlayer play];
-    
-    
 }
 
 - (void) rate:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options

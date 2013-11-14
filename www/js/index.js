@@ -52,7 +52,7 @@ var app = {
 		console.log('init');
 		
 		// 播歌
-		LowLatencyAudio.loadSong( "song1.caf" );
+		LowLatencyAudio.loadSong( "audio_001" );
 		
 		// 設定畫布
 		canvas = document.getElementById("canvas1");
@@ -124,19 +124,16 @@ var app = {
 				if( playAngle > 360 ) playAngle -= 360;
 			}
 		}, 50 );
-	
-		
 
 		// 設定手指在時鐘上移動
 		app.onTouchMove();
-		
+
 		app.onTouchEnd();
-	
 	},
 	onTouchMove: function() {
 
 		canvas.addEventListener("touchmove", function(evt) {
-		
+
 			evt.preventDefault();
 
 			for( var i=0; i<evt.touches.length; i++ ) {
