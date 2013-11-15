@@ -28,3 +28,5 @@ youtube 影片
 
     另外也練習了一下 html5 canvas 的 drawImage、translate、rotate 等功能
     繪製一個有旋轉轉盤的打碟機
+
+PS:目前的版本只適用於 iPad
